@@ -1,0 +1,118 @@
+.property-wallet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px 0px 24px;
+  position: relative;
+  background-color: #ffffff;
+  border-radius: 15px;
+}
+
+.property-wallet .frame {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+  background-color: #ffffff;
+  border-radius: 15px 15px 0px 0px;
+  box-shadow: inset 0px -1px 0px #00000040;
+}
+
+.property-wallet .text-wrapper {
+  position: relative;
+  width: fit-content;
+  margin-top: -1px;
+  font-family: "DM Sans", Helvetica;
+  font-weight: 700;
+  color: #212121;
+  font-size: 20px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.property-wallet .img {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+.property-wallet .div {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 16px 24px;
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.property-wallet .frame-2 {
+  display: flex;
+  width: 352px;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border-radius: 15px 15px 0px 0px;
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.property-wallet .text-wrapper-2 {
+  position: relative;
+  width: fit-content;
+  font-family: "DM Sans", Helvetica;
+  font-weight: 400;
+  color: #212121;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.property-wallet .frame-3 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  align-self: stretch;
+  width: 100%;
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.property-wallet .frame-wrapper {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.property-wallet .frame-4 {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.property-wallet .img-2 {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.property-wallet .frame-5 {
+  display: flex;
+  width: 129px;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  flex: 0 0 auto;
+}

@@ -4,12 +4,26 @@
     <meta name="viewport" content="width=device-width, initial-scal=1.0" />
     <title>login-signUp page</title>
     <link rel="stylesheet" href="login.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
     <script
       src="https://kit.fontawesome.com/e30c869c53.js"
       crossorigin="anonymous"
     ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
+      defer
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"
+      defer
+    ></script>
   </head>
   <body>
+    <div class="backdrop"><span class="loader"></span></div>
     <div class="container">
       <div class="form-box">
         <h1 id="title">Sign Up</h1>
@@ -17,18 +31,20 @@
           <div class="input-group">
             <div class="input-field" id="nameField">
               <i class="fa-solid fa-user"></i>
-              <input type="text" placeholder="Name" />
+              <input type="text" placeholder="Name" id="name" />
             </div>
 
             <div class="input-field">
               <i class="fa-solid fa-envelope"></i>
-              <input type="email" placeholder="Email" />
+              <input type="email" placeholder="Email" id="email" />
             </div>
 
             <div class="input-field">
               <i class="fa-solid fa-lock"></i>
-              <input type="password" placeholder="Password" />
+              <input type="password" placeholder="Password" id="password" />
             </div>
+
+            <div id="errors"></div>
             <p>Lost password <a href="#">Click Here!</a></p>
           </div>
           <div class="btn-field">
@@ -46,19 +62,80 @@
       let signinBtn = document.getElementById("signinBtn");
       let nameField = document.getElementById("nameField");
       let title = document.getElementById("title");
+      const api = "https://apodex-backend.onrender.com/api/";
+      const errors = document.querySelector("#errors");
 
       signinBtn.onclick = function () {
-        nameField.style.maxHeight = "0";
-        title.innerHTML = "Sign In";
-        signupBtn.classList.add("disable");
-        signinBtn.classList.remove("disable");
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        if (this.classList.contains("disable")) {
+          nameField.style.maxHeight = "0";
+          title.innerHTML = "Sign In";
+          signupBtn.classList.add("disable");
+          signinBtn.classList.remove("disable");
+          return;
+        }
+
+        sendData({ email, password }, `${api}login/`);
       };
 
+      function setLoading(isLoading) {
+        const backdrop = document.querySelector(".backdrop");
+        const loader = document.querySelector(".loader");
+
+        if (isLoading) {
+          backdrop.style.display = "flex";
+          loader.style.display = "block";
+          return;
+        }
+
+        if (!isLoading) {
+          backdrop.style.display = "none";
+          loader.style.display = "none";
+          return;
+        }
+      }
+
+      async function sendData(body, url) {
+        setLoading(true);
+        try {
+          const res = await axios.post(url, body);
+          console.log(res);
+          location.href = "/index.html";
+          setLoading(false);
+        } catch (error) {
+          setLoading(false);
+
+          const data = error.response.data;
+          console.log(data);
+
+          Object.keys(data).forEach((key) => {
+            if (Array.isArray(data[key])) {
+              data[key].forEach((item, index) => {
+                const pElement = document.createElement("p");
+                pElement.textContent = `${key}: ${item}`;
+
+                errors.insertAdjacentElement("beforeend", pElement);
+              });
+            }
+          });
+        }
+      }
+
       signupBtn.onclick = function () {
-        nameField.style.maxHeight = "60px";
-        title.innerHTML = "Sign Up";
-        signupBtn.classList.remove("disable");
-        signinBtn.classList.add("disable");
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        if (this.classList.contains("disable")) {
+          nameField.style.maxHeight = "60px";
+          title.innerHTML = "Sign Up";
+          signupBtn.classList.remove("disable");
+          signinBtn.classList.add("disable");
+          return;
+        }
+        sendData({ email, password, password2: password }, `${api}register/`);
       };
     </script>
   </body>

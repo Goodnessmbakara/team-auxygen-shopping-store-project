@@ -12,6 +12,10 @@
       src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
       defer
     ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"
+      defer
+    ></script>
   </head>
   <body>
     <div class="backdrop"><span class="loader"></span></div>
@@ -54,16 +58,21 @@
       let nameField = document.getElementById("nameField");
       let title = document.getElementById("title");
       const api = "https://apodex-backend.onrender.com/api/";
+      const errors = document.querySelector("#errors");
 
       signinBtn.onclick = function () {
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
 
+        if (this.classList.contains("disable")) {
+          nameField.style.maxHeight = "0";
+          title.innerHTML = "Sign In";
+          signupBtn.classList.add("disable");
+          signinBtn.classList.remove("disable");
+          return;
+        }
+
         sendData({ email, password }, `${api}login/`);
-        nameField.style.maxHeight = "0";
-        title.innerHTML = "Sign In";
-        signupBtn.classList.add("disable");
-        signinBtn.classList.remove("disable");
       };
 
       function setLoading(isLoading) {
@@ -92,7 +101,22 @@
           setLoading(false);
         } catch (error) {
           setLoading(false);
-          console.log(error);
+
+          const data = error.response.data;
+          console.log(data);
+
+          Object.keys(data).forEach((key) => {
+            console.log(`Property: ${key}`);
+
+            if (Array.isArray(data[key])) {
+              data[key].forEach((item, index) => {
+                const pElement = document.createElement("p");
+                pElement.textContent = `${key}: ${item}`;
+
+                errors.insertAdjacentElement("beforeend", pElement);
+              });
+            }
+          });
         }
       }
 
@@ -101,11 +125,14 @@
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
 
+        if (this.classList.contains("disable")) {
+          nameField.style.maxHeight = "60px";
+          title.innerHTML = "Sign Up";
+          signupBtn.classList.remove("disable");
+          signinBtn.classList.add("disable");
+          return;
+        }
         sendData({ email, password, password2: password }, `${api}register/`);
-        nameField.style.maxHeight = "60px";
-        title.innerHTML = "Sign Up";
-        signupBtn.classList.remove("disable");
-        signinBtn.classList.add("disable");
       };
     </script>
   </body>

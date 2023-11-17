@@ -100,8 +100,14 @@ form p a {
   color: #555;
 }
 
+#errors {
+}
+
 #errors > p {
+  padding-bottom: 0.2rem;
   color: red;
+   font-family: "Poppins" sans-serif;
+   font-weight: 300;
 }
 
 .backdrop {

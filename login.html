@@ -4,6 +4,11 @@
     <meta name="viewport" content="width=device-width, initial-scal=1.0" />
     <title>login-signUp page</title>
     <link rel="stylesheet" href="login.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
     <script
       src="https://kit.fontawesome.com/e30c869c53.js"
       crossorigin="anonymous"
@@ -106,8 +111,6 @@
           console.log(data);
 
           Object.keys(data).forEach((key) => {
-            console.log(`Property: ${key}`);
-
             if (Array.isArray(data[key])) {
               data[key].forEach((item, index) => {
                 const pElement = document.createElement("p");
